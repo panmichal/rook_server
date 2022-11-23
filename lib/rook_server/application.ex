@@ -13,9 +13,9 @@ defmodule RookServer.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: RookServer.PubSub},
       # Start the Endpoint (http/https)
-      RookServerWeb.Endpoint
-      # Start a worker by calling: RookServer.Worker.start_link(arg)
-      # {RookServer.Worker, arg}
+      RookServerWeb.Endpoint,
+      {Registry, keys: :unique, name: RookServer.DesktopAppRegistry},
+      {DynamicSupervisor, name: RookServer.AppStateSupervisor, strategy: :one_for_one}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
